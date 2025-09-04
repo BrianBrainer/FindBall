@@ -74,7 +74,7 @@ export default async function GameDetailPage({ params, searchParams }: GameDetai
   const message = resolvedSearchParams?.message as string
   
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-6">
         <Link href="/games" className="text-blue-600 hover:text-blue-800 text-sm">
           ← Back to Games
@@ -109,8 +109,9 @@ export default async function GameDetailPage({ params, searchParams }: GameDetai
         </div>
       )}
       
-      <Card>
-        <CardHeader>
+      <div className="max-w-4xl">
+        <Card>
+          <CardHeader>
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{game.title}</h1>
@@ -267,6 +268,7 @@ export default async function GameDetailPage({ params, searchParams }: GameDetai
           </div> */}
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }
