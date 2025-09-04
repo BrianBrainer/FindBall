@@ -3,17 +3,13 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-// import { currentUser, getOrganizedGamesForUser, getGamesWithSignupsForUser } from '@/lib/mockData'
-import { formatDate, formatTime, formatCurrency } from '@/utils/formatters'
 import Card, { CardContent, CardHeader } from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
 import GameCard from '@/components/game/GameCard'
 
 async function getUserDashboardData(userId: string) {
   try {
     const [organizedGames, gameSignups, user] = await Promise.all([
-      // Games organized by user
       prisma.game.findMany({
         where: {
           organizerId: userId
@@ -36,7 +32,6 @@ async function getUserDashboardData(userId: string) {
         }
       }),
       
-      // Games user has signed up for
       prisma.gameSignup.findMany({
         where: {
           userId: userId
@@ -65,7 +60,6 @@ async function getUserDashboardData(userId: string) {
         }
       }),
       
-      // User profile
       prisma.user.findUnique({
         where: {
           id: userId
@@ -78,16 +72,6 @@ async function getUserDashboardData(userId: string) {
     console.error('Error fetching dashboard data:', error)
     return { organizedGames: [], gameSignups: [], user: null }
   }
-
-  // MOCK DATA FALLBACK (commented out - uncomment if database issues)
-  // // Simulate API delay
-  // await new Promise(resolve => setTimeout(resolve, 500))
-  // 
-  // return {
-  //   organizedGames: getOrganizedGamesForUser(userId),
-  //   gameSignups: getGamesWithSignupsForUser(userId),
-  //   user: currentUser
-  // }
 }
 
 export default async function DashboardPage() {
@@ -107,7 +91,6 @@ export default async function DashboardPage() {
   const upcomingOrganizedGames = organizedGames.filter(game => new Date(game.date) > new Date())
   const upcomingSignedUpGames = gameSignups.filter(signup => new Date(signup.game.date) > new Date())
   
-  // Get user's joined games for conflict checking
   let userJoinedGames: any[] = []
   if (userId) {
     const userSignups = await prisma.gameSignup.findMany({
@@ -148,7 +131,6 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-6 md:gap-10 lg:gap-16 mb-8">
         <div className="aspect-square">
           <Card className="w-full h-full shadow-md">
@@ -174,13 +156,9 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-6 md:gap-10 lg:gap-16">
-        {/* Games You're Organizing */}
         <div>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">Games Organized</h2>
-            {/* <Link href="/games/create">
-              <Button>Create</Button>
-            </Link> */}
           </div>
           
           {upcomingOrganizedGames.length === 0 ? (
@@ -220,13 +198,9 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {/* Games You've Joined */}
         <div>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">Games Joined</h2>
-            {/* <Link href="/games">
-              <Button variant="outline">Find</Button>
-            </Link> */}
           </div>
           
           {upcomingSignedUpGames.length === 0 ? (
@@ -268,7 +242,6 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Quick Actions */}
       <Card className="mt-8">
         <CardHeader>
           <h2 className="text-xl font-semibold">Quick Actions</h2>
