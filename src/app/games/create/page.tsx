@@ -12,8 +12,19 @@ export default async function CreateGamePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <GameForm />
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Create New Game</h1>
+          <p className="text-gray-600 mt-2">
+            Organize a football game and build your local community
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-4xl">
+        <GameForm />
+      </div>
     </div>
   );
 
