@@ -303,14 +303,48 @@ export const authOptions: NextAuthOptions = {
 6. **Access the application**
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Development Commands
+
+```bash
+# Development
+npm run dev                    # Start development server
+npm run build                  # Build for production
+npm run start                  # Start production server
+
+# Code Quality
+npm run lint                   # Run ESLint
+npm run lint:fix               # Run ESLint with auto-fix
+npm run format                 # Format code with Prettier
+npm run format:check           # Check code formatting
+npm run type-check             # Run TypeScript type checking
+npm run check-all              # Run all checks (types, lint, format)
+```
+
 ## 📋 Development Guidelines
 
 ### Code Style
 - **TypeScript**: All code must be type-safe
-- **ESLint**: Follow configured linting rules
-- **Prettier**: Consistent code formatting
+- **ESLint**: Follow configured linting rules (see `eslint.config.mjs`)
+- **Prettier**: Consistent code formatting (see `.prettierrc`)
 - **Components**: Use PascalCase for component files
 - **Utilities**: Use camelCase for utility functions
+
+### ESLint Configuration
+The project uses a comprehensive ESLint setup with the following rules:
+- **Next.js**: Core web vitals and TypeScript rules
+- **React**: React-specific linting with hooks validation
+- **TypeScript**: Strict type checking with warnings for `any` types
+- **Accessibility**: JSX accessibility rules for better UX
+- **Import Organization**: Automatic import sorting and organization
+- **Code Quality**: Consistent code patterns and best practices
+
+### Prettier Configuration
+Code formatting is standardized with Prettier:
+- **Semi-colons**: Required
+- **Quotes**: Single quotes preferred
+- **Print Width**: 100 characters
+- **Tab Width**: 2 spaces
+- **Trailing Commas**: ES5 compatible
 
 ### File Naming Conventions
 - **Pages**: lowercase with hyphens (`create-game/page.tsx`)

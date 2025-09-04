@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+.next/
+out/
+build/
+dist/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# Cache
+.turbo/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+*.d.ts
+*.map
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
