@@ -72,14 +72,15 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
   ).length
   
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-6">
         <Link href="/games" className="text-blue-600 hover:text-blue-800 text-sm">
           ← Back to Games
         </Link>
       </div>
 
-      {/* Profile Header */}
+      <div className="max-w-4xl">
+        {/* Profile Header */}
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center">
@@ -194,6 +195,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
             )}
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   )

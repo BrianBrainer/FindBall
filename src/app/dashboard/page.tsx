@@ -149,10 +149,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 gap-12 mb-8">
+      <div className="grid grid-cols-2 gap-6 md:gap-10 lg:gap-16 mb-8">
         <div className="aspect-square">
           <Card className="w-full h-full shadow-md">
-            <CardContent className="h-full flex flex-col justify-center items-center text-center p-4">
+            <CardContent className="h-full justify-center items-center text-center p-4">
               <div className="text-3xl font-bold text-blue-600 mb-2">
                 {upcomingOrganizedGames.length}
               </div>
@@ -163,7 +163,7 @@ export default async function DashboardPage() {
         
         <div className="aspect-square">
           <Card className="w-full h-full">
-            <CardContent className="h-full flex flex-col justify-center items-center text-center p-4">
+            <CardContent className="h-full justify-center items-center text-center p-4">
               <div className="text-3xl font-bold text-green-600 mb-2">
                 {upcomingSignedUpGames.length}
               </div>
@@ -173,21 +173,20 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-12">
+      <div className="grid grid-cols-2 gap-6 md:gap-10 lg:gap-16">
         {/* Games You're Organizing */}
         <div>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">Games Organized</h2>
-            <Link href="/games/create">
+            {/* <Link href="/games/create">
               <Button>Create</Button>
-            </Link>
+            </Link> */}
           </div>
           
           {upcomingOrganizedGames.length === 0 ? (
             <div className="aspect-square">
               <Card className="w-full h-full">
-                <CardContent className="h-full flex flex-col justify-center items-center text-center p-8">
-                  <div className="text-5xl mb-4">⚽</div>
+                <CardContent className="h-full justify-center items-center text-center p-8">
                   <p className="text-lg text-gray-600 mb-6">
                     No upcoming games organized
                   </p>
@@ -198,7 +197,7 @@ export default async function DashboardPage() {
               </Card>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
               {upcomingOrganizedGames.slice(0, 4).map((game) => (
                 <GameCard 
                   key={game.id} 
@@ -225,9 +224,9 @@ export default async function DashboardPage() {
         <div>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">Games Joined</h2>
-            <Link href="/games">
+            {/* <Link href="/games">
               <Button variant="outline">Find</Button>
-            </Link>
+            </Link> */}
           </div>
           
           {upcomingSignedUpGames.length === 0 ? (
@@ -245,7 +244,7 @@ export default async function DashboardPage() {
               </Card>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
               {upcomingSignedUpGames.slice(0, 4).map((signup) => (
                 <GameCard 
                   key={signup.id} 
