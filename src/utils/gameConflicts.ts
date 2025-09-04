@@ -1,9 +1,9 @@
-import { GameWithDetails, SerializedGameWithDetails } from '@/types'
+import { GameWithDetails, SerializedGameWithDetails } from '@/types';
 
 export interface TimeConflict {
-  hasConflict: boolean
-  conflictingGame?: SerializedGameWithDetails
-  message?: string
+  hasConflict: boolean;
+  conflictingGame?: SerializedGameWithDetails;
+  message?: string;
 }
 
 /**
@@ -16,33 +16,34 @@ export function checkGameTimeConflict(
   targetGame: SerializedGameWithDetails,
   userJoinedGames: SerializedGameWithDetails[]
 ): TimeConflict {
-  const targetStart = new Date(targetGame.date)
-  const targetEnd = new Date(targetStart.getTime() + (targetGame.duration * 60 * 1000))
-  
+  const targetStart = new Date(targetGame.date);
+  const targetEnd = new Date(targetStart.getTime() + targetGame.duration * 60 * 1000);
+
   // 30 minute buffer between games
-  const bufferTime = 30 * 60 * 1000
-  const targetBufferedStart = new Date(targetStart.getTime() - bufferTime)
-  const targetBufferedEnd = new Date(targetEnd.getTime() + bufferTime)
+  const bufferTime = 30 * 60 * 1000;
+  const targetBufferedStart = new Date(targetStart.getTime() - bufferTime);
+  const targetBufferedEnd = new Date(targetEnd.getTime() + bufferTime);
 
   for (const joinedGame of userJoinedGames) {
-    const joinedStart = new Date(joinedGame.date)
-    const joinedEnd = new Date(joinedStart.getTime() + (joinedGame.duration * 60 * 1000))
-    const joinedBufferedStart = new Date(joinedStart.getTime() - bufferTime)
-    const joinedBufferedEnd = new Date(joinedEnd.getTime() + bufferTime)
+    const joinedStart = new Date(joinedGame.date);
+    const joinedEnd = new Date(joinedStart.getTime() + joinedGame.duration * 60 * 1000);
+    const joinedBufferedStart = new Date(joinedStart.getTime() - bufferTime);
+    const joinedBufferedEnd = new Date(joinedEnd.getTime() + bufferTime);
 
     // Check if games overlap (including buffer time)
-    const hasOverlap = targetBufferedStart < joinedBufferedEnd && targetBufferedEnd > joinedBufferedStart
+    const hasOverlap =
+      targetBufferedStart < joinedBufferedEnd && targetBufferedEnd > joinedBufferedStart;
 
     if (hasOverlap) {
       return {
         hasConflict: true,
         conflictingGame: joinedGame,
-        message: `Conflicts with "${joinedGame.title}" on ${joinedStart.toLocaleDateString()} at ${joinedStart.toLocaleTimeString()}`
-      }
+        message: `Conflicts with "${joinedGame.title}" on ${joinedStart.toLocaleDateString()} at ${joinedStart.toLocaleTimeString()}`,
+      };
     }
   }
 
-  return { hasConflict: false }
+  return { hasConflict: false };
 }
 
 /**
@@ -50,11 +51,11 @@ export function checkGameTimeConflict(
  */
 export function formatConflictMessage(conflict: TimeConflict): string {
   if (!conflict.hasConflict || !conflict.conflictingGame) {
-    return ''
+    return '';
   }
 
-  const conflictGame = conflict.conflictingGame
-  const conflictStart = new Date(conflictGame.date)
-  
-  return `Time conflict with "${conflictGame.title}" (${conflictStart.toLocaleDateString()} at ${conflictStart.toLocaleTimeString()}). Games must have at least 30 minutes between them.`
+  const conflictGame = conflict.conflictingGame;
+  const conflictStart = new Date(conflictGame.date);
+
+  return `Time conflict with "${conflictGame.title}" (${conflictStart.toLocaleDateString()} at ${conflictStart.toLocaleTimeString()}). Games must have at least 30 minutes between them.`;
 }

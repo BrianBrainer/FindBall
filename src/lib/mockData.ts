@@ -1,5 +1,5 @@
-import { GameWithDetails, User, GameSignup } from '@/types'
-import { Decimal } from '@prisma/client/runtime/library'
+import { GameWithDetails, User, GameSignup } from '@/types';
+import { Decimal } from '@prisma/client/runtime/library';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -15,7 +15,7 @@ export const mockUsers: User[] = [
     phone: '+1-555-0123',
     location: 'New York, NY',
     bio: 'Football enthusiast with 10+ years experience. Love organizing local games!',
-    skillLevel: 'ADVANCED'
+    skillLevel: 'ADVANCED',
   },
   {
     id: 'user-2',
@@ -29,7 +29,7 @@ export const mockUsers: User[] = [
     phone: '+1-555-0124',
     location: 'Brooklyn, NY',
     bio: 'Weekend warrior looking for fun pickup games',
-    skillLevel: 'INTERMEDIATE'
+    skillLevel: 'INTERMEDIATE',
   },
   {
     id: 'user-3',
@@ -43,7 +43,7 @@ export const mockUsers: User[] = [
     phone: '+1-555-0125',
     location: 'Queens, NY',
     bio: 'Former college player, now just playing for fun',
-    skillLevel: 'EXPERT'
+    skillLevel: 'EXPERT',
   },
   {
     id: 'current-user',
@@ -57,25 +57,26 @@ export const mockUsers: User[] = [
     phone: '+1-555-0100',
     location: 'Manhattan, NY',
     bio: 'Demo user account for testing',
-    skillLevel: 'INTERMEDIATE'
-  }
-]
+    skillLevel: 'INTERMEDIATE',
+  },
+];
 
 // Generate future dates for games
-const today = new Date()
-const tomorrow = new Date(today)
-tomorrow.setDate(today.getDate() + 1)
-const nextWeek = new Date(today)
-nextWeek.setDate(today.getDate() + 7)
-const nextMonth = new Date(today)
-nextMonth.setMonth(today.getMonth() + 1)
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+const nextWeek = new Date(today);
+nextWeek.setDate(today.getDate() + 7);
+const nextMonth = new Date(today);
+nextMonth.setMonth(today.getMonth() + 1);
 
 // Mock Games
 export const mockGames: GameWithDetails[] = [
   {
     id: 'game-1',
     title: 'Sunday Morning Kickabout',
-    description: 'Casual game for all skill levels. Great way to start the weekend! We have goals, cones, and plenty of water. Just bring yourself and good vibes.',
+    description:
+      'Casual game for all skill levels. Great way to start the weekend! We have goals, cones, and plenty of water. Just bring yourself and good vibes.',
     date: tomorrow,
     duration: 90,
     location: 'Central Park Soccer Field A',
@@ -83,7 +84,7 @@ export const mockGames: GameWithDetails[] = [
     longitude: -73.9654,
     maxPlayers: 20,
     currentPlayers: 12,
-    pricePerPlayer: new Decimal(15.00),
+    pricePerPlayer: new Decimal(15.0),
     gameType: 'CASUAL',
     skillLevel: 'INTERMEDIATE',
     isPublic: true,
@@ -93,12 +94,13 @@ export const mockGames: GameWithDetails[] = [
     updatedAt: new Date('2024-08-10'),
     organizer: mockUsers[0],
     signups: [],
-    _count: { signups: 12 }
+    _count: { signups: 12 },
   },
   {
     id: 'game-2',
     title: 'Competitive 11v11 Match',
-    description: 'Serious game for experienced players. Full pitch, referees provided. This is a competitive match so please come prepared for intense gameplay.',
+    description:
+      'Serious game for experienced players. Full pitch, referees provided. This is a competitive match so please come prepared for intense gameplay.',
     date: nextWeek,
     duration: 120,
     location: 'Randalls Island Field 3',
@@ -106,7 +108,7 @@ export const mockGames: GameWithDetails[] = [
     longitude: -73.9249,
     maxPlayers: 22,
     currentPlayers: 18,
-    pricePerPlayer: new Decimal(25.00),
+    pricePerPlayer: new Decimal(25.0),
     gameType: 'COMPETITIVE',
     skillLevel: 'ADVANCED',
     isPublic: true,
@@ -116,12 +118,13 @@ export const mockGames: GameWithDetails[] = [
     updatedAt: new Date('2024-08-08'),
     organizer: mockUsers[1],
     signups: [],
-    _count: { signups: 18 }
+    _count: { signups: 18 },
   },
   {
     id: 'game-3',
     title: 'Thursday Evening Pickup',
-    description: 'Quick game after work. Bring your energy and let\'s have some fun! Perfect for unwinding after a long day.',
+    description:
+      "Quick game after work. Bring your energy and let's have some fun! Perfect for unwinding after a long day.",
     date: new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
     duration: 75,
     location: 'Brooklyn Bridge Park Field',
@@ -129,7 +132,7 @@ export const mockGames: GameWithDetails[] = [
     longitude: -73.9969,
     maxPlayers: 16,
     currentPlayers: 16,
-    pricePerPlayer: new Decimal(12.00),
+    pricePerPlayer: new Decimal(12.0),
     gameType: 'PICKUP',
     skillLevel: 'BEGINNER',
     isPublic: true,
@@ -139,12 +142,13 @@ export const mockGames: GameWithDetails[] = [
     updatedAt: new Date('2024-08-09'),
     organizer: mockUsers[2],
     signups: [],
-    _count: { signups: 16 }
+    _count: { signups: 16 },
   },
   {
     id: 'game-4',
     title: 'Weekend Tournament Prep',
-    description: 'Training session for upcoming tournament. Focus on tactics and teamwork. Serious players only!',
+    description:
+      'Training session for upcoming tournament. Focus on tactics and teamwork. Serious players only!',
     date: new Date(today.getTime() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
     duration: 100,
     location: 'Queens Soccer Complex',
@@ -152,7 +156,7 @@ export const mockGames: GameWithDetails[] = [
     longitude: -73.7949,
     maxPlayers: 18,
     currentPlayers: 8,
-    pricePerPlayer: new Decimal(20.00),
+    pricePerPlayer: new Decimal(20.0),
     gameType: 'TOURNAMENT',
     skillLevel: 'EXPERT',
     isPublic: true,
@@ -162,20 +166,21 @@ export const mockGames: GameWithDetails[] = [
     updatedAt: new Date('2024-08-11'),
     organizer: mockUsers[0],
     signups: [],
-    _count: { signups: 8 }
+    _count: { signups: 8 },
   },
   {
     id: 'game-5',
     title: 'Beginner Friendly Game',
-    description: 'Perfect for newcomers to the sport! We\'ll focus on basics and having fun. No pressure, just enjoyment.',
+    description:
+      "Perfect for newcomers to the sport! We'll focus on basics and having fun. No pressure, just enjoyment.",
     date: new Date(today.getTime() + 8 * 24 * 60 * 60 * 1000), // 8 days from now
     duration: 60,
     location: 'Prospect Park Meadow',
     latitude: 40.6602,
-    longitude: -73.9690,
+    longitude: -73.969,
     maxPlayers: 14,
     currentPlayers: 6,
-    pricePerPlayer: new Decimal(10.00),
+    pricePerPlayer: new Decimal(10.0),
     gameType: 'CASUAL',
     skillLevel: 'BEGINNER',
     isPublic: true,
@@ -185,7 +190,7 @@ export const mockGames: GameWithDetails[] = [
     updatedAt: new Date('2024-08-12'),
     organizer: mockUsers[1],
     signups: [],
-    _count: { signups: 6 }
+    _count: { signups: 6 },
   },
   {
     id: 'current-user-game-1',
@@ -198,7 +203,7 @@ export const mockGames: GameWithDetails[] = [
     longitude: -73.9851,
     maxPlayers: 20,
     currentPlayers: 5,
-    pricePerPlayer: new Decimal(15.00),
+    pricePerPlayer: new Decimal(15.0),
     gameType: 'CASUAL',
     skillLevel: 'INTERMEDIATE',
     isPublic: true,
@@ -208,9 +213,9 @@ export const mockGames: GameWithDetails[] = [
     updatedAt: new Date('2024-08-12'),
     organizer: mockUsers[3],
     signups: [],
-    _count: { signups: 5 }
-  }
-]
+    _count: { signups: 5 },
+  },
+];
 
 // Mock Game Signups
 export const mockGameSignups: GameSignup[] = [
@@ -221,7 +226,7 @@ export const mockGameSignups: GameSignup[] = [
     status: 'CONFIRMED',
     position: null,
     createdAt: new Date('2024-08-11'),
-    updatedAt: new Date('2024-08-11')
+    updatedAt: new Date('2024-08-11'),
   },
   {
     id: 'signup-2',
@@ -230,7 +235,7 @@ export const mockGameSignups: GameSignup[] = [
     status: 'PENDING_PAYMENT',
     position: null,
     createdAt: new Date('2024-08-12'),
-    updatedAt: new Date('2024-08-12')
+    updatedAt: new Date('2024-08-12'),
   },
   {
     id: 'signup-3',
@@ -239,9 +244,9 @@ export const mockGameSignups: GameSignup[] = [
     status: 'WAITLISTED',
     position: 1,
     createdAt: new Date('2024-08-12'),
-    updatedAt: new Date('2024-08-12')
-  }
-]
+    updatedAt: new Date('2024-08-12'),
+  },
+];
 
 // Helper function to get games with signup details for dashboard
 export const getGamesWithSignupsForUser = (userId: string) => {
@@ -249,14 +254,14 @@ export const getGamesWithSignupsForUser = (userId: string) => {
     .filter(signup => signup.userId === userId)
     .map(signup => ({
       ...signup,
-      game: mockGames.find(game => game.id === signup.gameId)!
-    }))
-}
+      game: mockGames.find(game => game.id === signup.gameId)!,
+    }));
+};
 
 // Helper function to get organized games for user
 export const getOrganizedGamesForUser = (userId: string) => {
-  return mockGames.filter(game => game.organizerId === userId)
-}
+  return mockGames.filter(game => game.organizerId === userId);
+};
 
 // Current user for demo
-export const currentUser = mockUsers[3] // Alex Demo
+export const currentUser = mockUsers[3]; // Alex Demo

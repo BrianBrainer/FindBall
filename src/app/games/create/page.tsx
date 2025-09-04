@@ -1,26 +1,26 @@
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
-import { authOptions } from '@/lib/auth'
-import GameForm from '@/components/forms/GameForm'
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/auth';
+import GameForm from '@/components/forms/GameForm';
 // import { getAuthStatus } from '@/lib/mockAuth'
 
 export default async function CreateGamePage() {
-  const session = await getServerSession(authOptions)
-  
+  const session = await getServerSession(authOptions);
+
   if (!session) {
-    redirect('/auth/signin?callbackUrl=/games/create')
+    redirect('/auth/signin?callbackUrl=/games/create');
   }
-  
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <GameForm />
     </div>
-  )
+  );
 
   // MOCK AUTH FALLBACK (commented out - uncomment if auth issues)
   // // Mock authentication check
   // const isAuthenticated = getAuthStatus() === 'authenticated'
-  // 
+  //
   // if (!isAuthenticated) {
   //   return (
   //     <div className="max-w-2xl mx-auto px-4 py-8 text-center">
@@ -30,7 +30,7 @@ export default async function CreateGamePage() {
   //     </div>
   //   )
   // }
-  // 
+  //
   // return (
   //   <div className="max-w-4xl mx-auto px-4 py-8">
   //     <GameForm />

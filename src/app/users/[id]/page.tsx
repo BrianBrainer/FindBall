@@ -1,21 +1,21 @@
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
-import { formatDate, formatTime, formatCurrency } from '@/utils/formatters'
-import Card, { CardContent, CardHeader } from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { formatDate, formatTime, formatCurrency } from '@/utils/formatters';
+import Card, { CardContent, CardHeader } from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Badge from '@/components/ui/Badge';
 
 interface UserProfilePageProps {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }
 
 export default async function UserProfilePage({ params }: UserProfilePageProps) {
-  const session = await getServerSession(authOptions)
-  const resolvedParams = await params
-  
+  const session = await getServerSession(authOptions);
+  const resolvedParams = await params;
+
   // Get user profile data
   const user = await prisma.user.findUnique({
     where: { id: resolvedParams.id },
@@ -27,50 +27,50 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
       // Get user's game history
       gameSignups: {
         where: {
-          status: 'CONFIRMED'
+          status: 'CONFIRMED',
         },
         include: {
           game: {
             include: {
-              organizer: true
-            }
-          }
+              organizer: true,
+            },
+          },
         },
         orderBy: {
           game: {
-            date: 'desc'
-          }
+            date: 'desc',
+          },
         },
-        take: 10 // Show last 10 games
+        take: 10, // Show last 10 games
       },
       // Get games they organized
       organizedGames: {
         include: {
           _count: {
             select: {
-              signups: true
-            }
-          }
+              signups: true,
+            },
+          },
         },
         orderBy: {
-          date: 'desc'
+          date: 'desc',
         },
-        take: 5 // Show last 5 organized games
-      }
-    }
-  })
+        take: 5, // Show last 5 organized games
+      },
+    },
+  });
 
   if (!user) {
-    notFound()
+    notFound();
   }
 
   // Calculate stats
-  const totalGamesPlayed = user.gameSignups.length
-  const totalGamesOrganized = user.organizedGames.length
-  const upcomingGames = user.gameSignups.filter(signup => 
-    new Date(signup.game.date) > new Date()
-  ).length
-  
+  const totalGamesPlayed = user.gameSignups.length;
+  const totalGamesOrganized = user.organizedGames.length;
+  const upcomingGames = user.gameSignups.filter(
+    signup => new Date(signup.game.date) > new Date()
+  ).length;
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-6">
@@ -87,10 +87,10 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               {user.name?.charAt(0) || user.email?.charAt(0) || 'U'}
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{user.name || 'Anonymous Player'}</h1>
-              <p className="text-gray-600 mt-1">
-                Member since {formatDate(user.createdAt)}
-              </p>
+              <h1 className="text-3xl font-bold text-gray-900">
+                {user.name || 'Anonymous Player'}
+              </h1>
+              <p className="text-gray-600 mt-1">Member since {formatDate(user.createdAt)}</p>
             </div>
           </div>
         </CardHeader>
@@ -124,22 +124,28 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               <p className="text-gray-600 text-center py-4">No games played yet</p>
             ) : (
               <div className="space-y-3">
-                {user.gameSignups.slice(0, 5).map((signup) => (
+                {user.gameSignups.slice(0, 5).map(signup => (
                   <div key={signup.id} className="border rounded-lg p-3">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-medium text-gray-900">{signup.game.title}</h3>
-                      <Badge variant={new Date(signup.game.date) > new Date() ? 'success' : 'default'}>
+                      <Badge
+                        variant={new Date(signup.game.date) > new Date() ? 'success' : 'default'}
+                      >
                         {new Date(signup.game.date) > new Date() ? 'Upcoming' : 'Completed'}
                       </Badge>
                     </div>
                     <div className="text-sm text-gray-600 space-y-1">
-                      <div>📅 {formatDate(signup.game.date)} at {formatTime(signup.game.date)}</div>
+                      <div>
+                        📅 {formatDate(signup.game.date)} at {formatTime(signup.game.date)}
+                      </div>
                       <div>📍 {signup.game.location}</div>
                       <div>👤 Organized by {signup.game.organizer.name}</div>
                     </div>
                     <div className="mt-2">
                       <Link href={`/games/${signup.game.id}`}>
-                        <Button size="sm" variant="outline">View Game</Button>
+                        <Button size="sm" variant="outline">
+                          View Game
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -164,7 +170,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               <p className="text-gray-600 text-center py-4">No games organized yet</p>
             ) : (
               <div className="space-y-3">
-                {user.organizedGames.slice(0, 5).map((game) => (
+                {user.organizedGames.slice(0, 5).map(game => (
                   <div key={game.id} className="border rounded-lg p-3">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-medium text-gray-900">{game.title}</h3>
@@ -173,14 +179,20 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                       </Badge>
                     </div>
                     <div className="text-sm text-gray-600 space-y-1">
-                      <div>📅 {formatDate(game.date)} at {formatTime(game.date)}</div>
+                      <div>
+                        📅 {formatDate(game.date)} at {formatTime(game.date)}
+                      </div>
                       <div>📍 {game.location}</div>
-                      <div>👥 {game._count.signups}/{game.maxPlayers} players</div>
+                      <div>
+                        👥 {game._count.signups}/{game.maxPlayers} players
+                      </div>
                       <div>💰 {formatCurrency(Number(game.pricePerPlayer))} per player</div>
                     </div>
                     <div className="mt-2">
                       <Link href={`/games/${game.id}`}>
-                        <Button size="sm" variant="outline">View Game</Button>
+                        <Button size="sm" variant="outline">
+                          View Game
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -196,5 +208,5 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
         </Card>
       </div>
     </div>
-  )
+  );
 }

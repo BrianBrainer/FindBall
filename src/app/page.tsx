@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import Button from '@/components/ui/Button'
-import Card, { CardContent } from '@/components/ui/Card'
+import Link from 'next/link';
+import Button from '@/components/ui/Button';
+import Card, { CardContent } from '@/components/ui/Card';
 
 export default function Home() {
   return (
@@ -8,19 +8,19 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-20 text-center">
         <div className="max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            Find Your Perfect Football Game
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">Find Your Perfect Football Game</h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Connect with local football players, join games in your area, and organize your own matches. 
-            Pay upfront, secure your spot, and get playing!
+            Connect with local football players, join games in your area, and organize your own
+            matches. Pay upfront, secure your spot, and get playing!
           </p>
           <div className="flex justify-center space-x-4">
             <Link href="/games">
               <Button size="lg">Find Games</Button>
             </Link>
             <Link href="/games/create">
-              <Button variant="outline" size="lg">Organize a Game</Button>
+              <Button variant="outline" size="lg">
+                Organize a Game
+              </Button>
             </Link>
           </div>
         </div>
@@ -29,17 +29,15 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            How It Works
-          </h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card>
               <CardContent className="text-center py-8">
                 <div className="text-4xl mb-4">🔍</div>
                 <h3 className="text-xl font-semibold mb-3">Find Games</h3>
                 <p className="text-gray-600">
-                  Browse local football games by location, skill level, and time. 
-                  Filter to find the perfect match for you.
+                  Browse local football games by location, skill level, and time. Filter to find the
+                  perfect match for you.
                 </p>
               </CardContent>
             </Card>
@@ -49,8 +47,8 @@ export default function Home() {
                 <div className="text-4xl mb-4">💳</div>
                 <h3 className="text-xl font-semibold mb-3">Pay & Secure</h3>
                 <p className="text-gray-600">
-                  Pay upfront to secure your spot. No-shows are minimized, 
-                  ensuring games actually happen as planned.
+                  Pay upfront to secure your spot. No-shows are minimized, ensuring games actually
+                  happen as planned.
                 </p>
               </CardContent>
             </Card>
@@ -60,8 +58,8 @@ export default function Home() {
                 <div className="text-4xl mb-4">⚽</div>
                 <h3 className="text-xl font-semibold mb-3">Play & Enjoy</h3>
                 <p className="text-gray-600">
-                  Show up and play! Meet new players, improve your skills, 
-                  and enjoy the beautiful game.
+                  Show up and play! Meet new players, improve your skills, and enjoy the beautiful
+                  game.
                 </p>
               </CardContent>
             </Card>
@@ -93,9 +91,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 text-center">
         <div className="max-w-2xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">
-            Ready to Get Started?
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Ready to Get Started?</h2>
           <p className="text-xl text-gray-600 mb-8">
             Join thousands of players who have found their perfect game with FindBall.
           </p>
@@ -105,5 +101,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  )
+  );
 }

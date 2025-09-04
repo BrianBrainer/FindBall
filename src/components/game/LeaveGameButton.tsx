@@ -1,58 +1,55 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Button from '@/components/ui/Button'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/ui/Button';
 
 interface LeaveGameButtonProps {
-  gameId: string
-  gameTitle: string
-  className?: string
+  gameId: string;
+  gameTitle: string;
+  className?: string;
 }
 
 export default function LeaveGameButton({ gameId, gameTitle, className }: LeaveGameButtonProps) {
-  const router = useRouter()
-  const [isLeaving, setIsLeaving] = useState(false)
-  const [showConfirm, setShowConfirm] = useState(false)
+  const router = useRouter();
+  const [isLeaving, setIsLeaving] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleLeaveGame = async () => {
-    setIsLeaving(true)
-    
+    setIsLeaving(true);
+
     try {
       const response = await fetch(`/api/games/${gameId}/leave`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        }
-      })
+        },
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to leave game')
+        throw new Error('Failed to leave game');
       }
 
       // Force a hard refresh to ensure state is updated
-      window.location.reload()
-      
+      window.location.reload();
     } catch (error) {
-      console.error('Error leaving game:', error)
-      alert('Failed to leave the game. Please try again.')
+      console.error('Error leaving game:', error);
+      alert('Failed to leave the game. Please try again.');
     } finally {
-      setIsLeaving(false)
-      setShowConfirm(false)
+      setIsLeaving(false);
+      setShowConfirm(false);
     }
-  }
+  };
 
   const handleCancel = () => {
-    setShowConfirm(false)
-  }
+    setShowConfirm(false);
+  };
 
   if (showConfirm) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg p-6 max-w-md mx-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Leave Game?
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Leave Game?</h3>
           <p className="text-gray-600 mb-6">
             Are you sure you want to leave "{gameTitle}"? This action cannot be undone.
           </p>
@@ -76,7 +73,7 @@ export default function LeaveGameButton({ gameId, gameTitle, className }: LeaveG
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -88,5 +85,5 @@ export default function LeaveGameButton({ gameId, gameTitle, className }: LeaveG
     >
       Leave Game
     </Button>
-  )
+  );
 }

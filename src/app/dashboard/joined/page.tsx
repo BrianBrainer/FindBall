@@ -1,27 +1,27 @@
-import Link from 'next/link'
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
-import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
-import GameCard from '@/components/game/GameCard'
-import Button from '@/components/ui/Button'
+import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import GameCard from '@/components/game/GameCard';
+import Button from '@/components/ui/Button';
 
 export default async function JoinedGamesPage() {
-  const session = await getServerSession(authOptions)
-  
+  const session = await getServerSession(authOptions);
+
   if (!session?.user) {
-    redirect('/auth/signin?callbackUrl=/dashboard/joined')
+    redirect('/auth/signin?callbackUrl=/dashboard/joined');
   }
-  
-  const userId = (session.user as any).id
+
+  const userId = (session.user as any).id;
   if (!userId) {
-    redirect('/auth/signin?callbackUrl=/dashboard/joined')
+    redirect('/auth/signin?callbackUrl=/dashboard/joined');
   }
 
   // Get all games user has joined
   const gameSignups = await prisma.gameSignup.findMany({
     where: {
-      userId: userId
+      userId: userId,
     },
     include: {
       game: {
@@ -29,29 +29,29 @@ export default async function JoinedGamesPage() {
           organizer: true,
           signups: {
             include: {
-              user: true
-            }
+              user: true,
+            },
           },
           _count: {
             select: {
-              signups: true
-            }
-          }
-        }
-      }
+              signups: true,
+            },
+          },
+        },
+      },
     },
     orderBy: {
       game: {
-        date: 'asc'
-      }
-    }
-  })
+        date: 'asc',
+      },
+    },
+  });
 
   // Get user's joined games for conflict checking
-  const userJoinedGames = gameSignups.map(signup => signup.game as any)
+  const userJoinedGames = gameSignups.map(signup => signup.game as any);
 
-  const upcomingSignups = gameSignups.filter(signup => new Date(signup.game.date) > new Date())
-  const pastSignups = gameSignups.filter(signup => new Date(signup.game.date) <= new Date())
+  const upcomingSignups = gameSignups.filter(signup => new Date(signup.game.date) > new Date());
+  const pastSignups = gameSignups.filter(signup => new Date(signup.game.date) <= new Date());
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -68,7 +68,7 @@ export default async function JoinedGamesPage() {
             All the games you've signed up for and participated in
           </p>
         </div>
-        
+
         <Link href="/games">
           <Button variant="outline">Find More Games</Button>
         </Link>
@@ -77,12 +77,14 @@ export default async function JoinedGamesPage() {
       {/* Upcoming Games */}
       {upcomingSignups.length > 0 && (
         <div className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Upcoming Games ({upcomingSignups.length})</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+            Upcoming Games ({upcomingSignups.length})
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingSignups.map((signup) => (
-              <GameCard 
-                key={signup.id} 
-                game={signup.game as any} 
+            {upcomingSignups.map(signup => (
+              <GameCard
+                key={signup.id}
+                game={signup.game as any}
                 currentUserId={userId}
                 userJoinedGames={userJoinedGames}
               />
@@ -94,12 +96,14 @@ export default async function JoinedGamesPage() {
       {/* Past Games */}
       {pastSignups.length > 0 && (
         <div className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Past Games ({pastSignups.length})</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+            Past Games ({pastSignups.length})
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pastSignups.map((signup) => (
-              <GameCard 
-                key={signup.id} 
-                game={signup.game as any} 
+            {pastSignups.map(signup => (
+              <GameCard
+                key={signup.id}
+                game={signup.game as any}
                 currentUserId={userId}
                 userJoinedGames={userJoinedGames}
               />
@@ -112,9 +116,7 @@ export default async function JoinedGamesPage() {
       {gameSignups.length === 0 && (
         <div className="text-center py-12">
           <div className="text-4xl mb-4">🎯</div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
-            No games joined yet
-          </h3>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">No games joined yet</h3>
           <p className="text-gray-600 mb-6">
             Start joining games and connect with your local football community!
           </p>
@@ -124,5 +126,5 @@ export default async function JoinedGamesPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

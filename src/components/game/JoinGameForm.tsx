@@ -1,32 +1,37 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { SerializedGameWithDetails } from '@/types'
-import { formatDate, formatTime, formatCurrency } from '@/utils/formatters'
-import { checkGameTimeConflict } from '@/utils/gameConflicts'
-import Card, { CardContent, CardHeader } from '@/components/ui/Card'
-import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { SerializedGameWithDetails } from '@/types';
+import { formatDate, formatTime, formatCurrency } from '@/utils/formatters';
+import { checkGameTimeConflict } from '@/utils/gameConflicts';
+import Card, { CardContent, CardHeader } from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Badge from '@/components/ui/Badge';
 
 interface JoinGameFormProps {
-  game: SerializedGameWithDetails
-  userId: string
-  spotsLeft: number
-  userJoinedGames?: SerializedGameWithDetails[]
+  game: SerializedGameWithDetails;
+  userId: string;
+  spotsLeft: number;
+  userJoinedGames?: SerializedGameWithDetails[];
 }
 
-export default function JoinGameForm({ game, userId, spotsLeft, userJoinedGames = [] }: JoinGameFormProps) {
-  const router = useRouter()
-  const [isJoining, setIsJoining] = useState(false)
-  const [error, setError] = useState('')
-  
+export default function JoinGameForm({
+  game,
+  userId,
+  spotsLeft,
+  userJoinedGames = [],
+}: JoinGameFormProps) {
+  const router = useRouter();
+  const [isJoining, setIsJoining] = useState(false);
+  const [error, setError] = useState('');
+
   // Check for time conflicts
-  const timeConflict = checkGameTimeConflict(game, userJoinedGames)
+  const timeConflict = checkGameTimeConflict(game, userJoinedGames);
 
   const handleJoinGame = async () => {
-    setIsJoining(true)
-    setError('')
+    setIsJoining(true);
+    setError('');
 
     try {
       const response = await fetch(`/api/games/${game.id}/join`, {
@@ -35,38 +40,35 @@ export default function JoinGameForm({ game, userId, spotsLeft, userJoinedGames 
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId
-        })
-      })
+          userId,
+        }),
+      });
 
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Failed to join game')
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to join game');
       }
 
-      const result = await response.json()
-      
+      const result = await response.json();
+
       // Redirect to game details with success message
-      router.push(`/games/${game.id}?message=joined-successfully`)
-      
+      router.push(`/games/${game.id}?message=joined-successfully`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred')
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
-      setIsJoining(false)
+      setIsJoining(false);
     }
-  }
+  };
 
   const handleCancel = () => {
-    router.back()
-  }
+    router.back();
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Join Game</h1>
-        <p className="text-gray-600 mt-2">
-          Review the game details and confirm your participation
-        </p>
+        <p className="text-gray-600 mt-2">Review the game details and confirm your participation</p>
       </div>
 
       <Card>
@@ -129,7 +131,8 @@ export default function JoinGameForm({ game, userId, spotsLeft, userJoinedGames 
                   <strong>Total Cost:</strong> {formatCurrency(Number(game.pricePerPlayer))}
                 </p>
                 <p className="text-blue-700 text-sm mt-1">
-                  Payment is required to confirm your spot. You'll be charged immediately upon joining.
+                  Payment is required to confirm your spot. You'll be charged immediately upon
+                  joining.
                 </p>
               </div>
             </div>
@@ -141,9 +144,7 @@ export default function JoinGameForm({ game, userId, spotsLeft, userJoinedGames 
                   <span className="text-yellow-600 mr-2">⚠️</span>
                   <div>
                     <p className="text-yellow-800 text-sm font-medium">Time Conflict</p>
-                    <p className="text-yellow-700 text-sm mt-1">
-                      {timeConflict.message}
-                    </p>
+                    <p className="text-yellow-700 text-sm mt-1">{timeConflict.message}</p>
                     <p className="text-yellow-700 text-sm mt-1">
                       You cannot join games that overlap or are within 30 minutes of each other.
                     </p>
@@ -172,20 +173,23 @@ export default function JoinGameForm({ game, userId, spotsLeft, userJoinedGames 
                 className="flex-1"
                 disabled={isJoining || timeConflict.hasConflict}
               >
-                {isJoining ? 'Joining...' : 
-                 timeConflict.hasConflict ? 'Cannot Join - Time Conflict' :
-                 `Join Game (${formatCurrency(Number(game.pricePerPlayer))})`}
+                {isJoining
+                  ? 'Joining...'
+                  : timeConflict.hasConflict
+                    ? 'Cannot Join - Time Conflict'
+                    : `Join Game (${formatCurrency(Number(game.pricePerPlayer))})`}
               </Button>
             </div>
 
             <div className="text-center">
               <p className="text-xs text-gray-500">
-                By joining this game, you agree to the terms and conditions and authorize payment of {formatCurrency(Number(game.pricePerPlayer))}.
+                By joining this game, you agree to the terms and conditions and authorize payment of{' '}
+                {formatCurrency(Number(game.pricePerPlayer))}.
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
